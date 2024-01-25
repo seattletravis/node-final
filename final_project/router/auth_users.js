@@ -31,6 +31,7 @@ const authenticatedUser = (username, password) => {
 regd_users.post('/login', (req, res) => {
 	const username = req.body.username;
 	const password = req.body.password;
+	req.session.username = username;
 
 	if (!username || !password) {
 		return res.status(404).json({ message: 'Error logging in' });
@@ -60,6 +61,7 @@ regd_users.post('/login', (req, res) => {
 // Add a book review
 regd_users.put('/auth/review/:isbn', (req, res) => {
 	//Write your code here
+	console.log(req.session.username);
 	return res.status(300).json({ message: 'Yet to be implemented' });
 });
 
