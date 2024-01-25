@@ -20,9 +20,23 @@ public_users.post('/register', (req, res) => {
 	return res.status(404).json({ message: 'Unable to register user.' });
 });
 
-// Get the book list available in the shop
+// Get the book list available in the shop - ASYNC
+// public_users.get('/', async function (req, res) {
+// 	const response = await fetch(books);
+// 	res.send(JSON.stringify(books, null, 4));
+// 	res.send(response);
+// });
+
 public_users.get('/', function (req, res) {
 	res.send(JSON.stringify(books, null, 4));
+});
+
+// Get book details based on ISBN - ASNYC
+public_users.get('/isbn/:isbn', async function (req, res) {
+	// const isbn = req.params.isbn;
+	const response = await fetch(books[isbn]);
+	// res.send(books[isbn]);
+	res.send(response);
 });
 
 // Get book details based on ISBN
