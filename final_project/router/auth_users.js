@@ -58,12 +58,22 @@ regd_users.post('/login', (req, res) => {
 	}
 });
 
+//delete a book review
+regd_users.delete('/auth/review/:isbn', (req, res) => {
+	const user = req.session.username;
+	const isbn = req.params.isbn;
+	books[isbn].reviews = books[isbn].reviews.filter(
+		(review) => review.username != user
+	);
+	res.send('Reviews have been updated!');
+});
+
 // Add a book review
 regd_users.put('/auth/review/:isbn', (req, res) => {
 	const user = req.session.username;
 	const isbn = req.params.isbn;
 	const review = req.body.review;
-	if (JSON.stringify(books[isbn].reviews) === '{}') {
+	if (JSON.stringify(books[isbn].reviews) === '[]') {
 		books[isbn].reviews = [
 			{
 				username: user,
