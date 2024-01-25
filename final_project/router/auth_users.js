@@ -63,16 +63,33 @@ regd_users.put('/auth/review/:isbn', (req, res) => {
 	const user = req.session.username;
 	const isbn = req.params.isbn;
 	const review = req.body.review;
-	console.log(review);
-	console.log(JSON.stringify(books[isbn].reviews) === '{}');
 	if (JSON.stringify(books[isbn].reviews) === '{}') {
-		books[isbn].reviews = {
-			username: user,
-			review: review,
-		};
+		books[isbn].reviews = [
+			{
+				username: user,
+				review: review,
+			},
+		];
 		res.send(`Book review added by ${user}!`);
 	} else {
-		res.send('gonn change it instead');
+		if (books[isbn].reviews[0].username === user) {
+			books[isbn].reviews = [
+				{
+					username: user,
+					review: review,
+				},
+			];
+			res.send(`${user}'s book review updated!`);
+		} else {
+			books[isbn].reviews = [
+				...books[isbn].reviews,
+				{
+					username: user,
+					review: review,
+				},
+			];
+			res.send(`Book review added by ${user}!`);
+		}
 	}
 });
 
