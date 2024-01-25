@@ -70,8 +70,10 @@ regd_users.put('/auth/review/:isbn', (req, res) => {
 			username: user,
 			review: review,
 		};
+		res.send(`Book review added by ${user}!`);
+	} else {
+		res.send('gonn change it instead');
 	}
-	res.send(`Book review added by ${user}!`);
 });
 
 module.exports.authenticated = regd_users;
